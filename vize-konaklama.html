@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vize & Konaklama Desteği - Studylab</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1244b0;
+            --primary-light: #e8eefb;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--dark); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 2px;
+        }
+
+        /* HERO */
+        .page-hero {
+            margin-top: 70px;
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, rgba(26,86,219,0.9), rgba(37,99,235,0.8)), url('https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=1400') center/cover no-repeat;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .page-hero p {
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* SECTIONS */
+        .section { padding: 70px 0; }
+        .section-alt { background: var(--light); }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            font-size: 1.05rem;
+            margin-bottom: 40px;
+            max-width: 650px;
+        }
+
+        .centered { text-align: center; margin-left: auto; margin-right: auto; }
+
+        /* OVERVIEW */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .overview-text p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .overview-img {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .overview-img img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 35px 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--gray);
+            font-size: 0.93rem;
+        }
+
+        /* STEPS */
+        .steps {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 35px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .step-content h3 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
+        .step-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* COUNTRIES TABLE */
+        .country-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            background: var(--white);
+        }
+
+        .country-table thead {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .country-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .country-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.93rem;
+            color: var(--gray);
+        }
+
+        .country-table tr:last-child td { border-bottom: none; }
+
+        .country-table tbody tr:hover { background: var(--primary-light); }
+
+        /* KONAKLAMA */
+        .accommodation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .accommodation-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: var(--white);
+            transition: transform 0.3s;
+        }
+
+        .accommodation-card:hover { transform: translateY(-4px); }
+
+        .accommodation-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .accommodation-card .card-body {
+            padding: 22px;
+        }
+
+        .accommodation-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .accommodation-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            padding: 70px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25d366;
+            color: var(--white);
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-left: 15px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 35px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .overview-grid { grid-template-columns: 1fr; }
+            .cards-grid, .accommodation-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex; }
+
+            .page-hero h1 { font-size: 1.8rem; }
+            .cards-grid, .accommodation-grid { grid-template-columns: 1fr; }
+
+            .country-table { font-size: 0.85rem; }
+            .country-table th, .country-table td { padding: 10px 12px; }
+
+            .btn-whatsapp { margin-left: 0; margin-top: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Study<span>lab</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="index.html#hizmetler">Hizmetler</a></li>
+                <li><a href="index.html#ulkeler">Ülkeler</a></li>
+                <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
+                <li><a href="index.html#iletisim">İletişim</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Ana Sayfa</a> &nbsp;/&nbsp; <a href="index.html#hizmetler">Hizmetler</a> &nbsp;/&nbsp; Vize & Konaklama
+            </div>
+            <h1>Vize & Konaklama Desteği</h1>
+            <p>Vize başvurusundan konaklama çözümlerine kadar yurt dışı eğitim sürecinizin her detayını yönetiyoruz.</p>
+        </div>
+    </section>
+
+    <!-- GENEL BAKIŞ -->
+    <section class="section">
+        <div class="container">
+            <div class="overview-grid">
+                <div class="overview-text">
+                    <h2 class="section-title">Sorunsuz Bir Geçiş İçin Yanınızdayız</h2>
+                    <p>Yurt dışında eğitim almak heyecan verici bir deneyim olsa da vize başvurusu ve konaklama bulma süreci stresli olabilir. Studylab olarak bu süreci sizin için kolaylaştırıyoruz.</p>
+                    <p>Deneyimli ekibimiz, her ülkenin vize gereksinimlerini yakından takip eder ve başvurunuzu en yüksek onay şansıyla hazırlar. Konaklama konusunda ise bütçenize ve tercihlerinize uygun seçenekler sunuyoruz.</p>
+                    <p>Amacımız, siz eğitiminize odaklanırken bürokratik işlemlerin yükünü omuzlarınızdan almak.</p>
+                </div>
+                <div class="overview-img">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600" alt="Vize başvuru süreci">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VİZE HİZMETLERİ -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title centered">Vize Hizmetlerimiz</h2>
+            <p class="section-subtitle centered">Başvurudan onaya kadar tüm süreci profesyonelce yönetiyoruz.</p>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">📄</div>
+                    <h3>Belge Hazırlığı</h3>
+                    <p>Başvuru için gerekli tüm belgeleri listeliyoruz, eksikleri kontrol ediyor ve dosyanızı eksiksiz hazırlıyoruz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>Niyet Mektubu Desteği</h3>
+                    <p>Konsolosluklar tarafından talep edilen motivasyon ve niyet mektuplarınızı birlikte oluşturuyoruz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📅</div>
+                    <h3>Randevu Yönetimi</h3>
+                    <p>Konsolosluk veya vize merkezi randevunuzu alıyor, mülakat hazırlığında rehberlik ediyoruz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💰</div>
+                    <h3>Mali Yeterlilik</h3>
+                    <p>Banka hesap dökümü, sponsor mektubu gibi mali belgelerin doğru hazırlanmasını sağlıyoruz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <h3>Sağlık Sigortası</h3>
+                    <p>Ülke gereksinimlerine uygun sağlık sigortası seçeneklerini araştırıp en uygun olanını öneriyoruz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>Süreç Takibi</h3>
+                    <p>Başvurunuzun her aşamasını takip ediyor, gelişmeleri anında sizinle paylaşıyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VİZE SÜRECİ ADIMLARI -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title centered">Vize Başvuru Süreci</h2>
+            <p class="section-subtitle centered">Adım adım yanınızdayız.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Ön Değerlendirme</h3>
+                        <p>Durumunuzu analiz ediyor, hedef ülkenizin vize gereksinimlerini belirliyoruz.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Belge Toplama & Kontrol</h3>
+                        <p>Gerekli belgelerin listesini çıkarıyor, eksikleri tamamlıyor ve dosyanızı hazırlıyoruz.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Başvuru & Randevu</h3>
+                        <p>Online başvurunuzu yapıyor, konsolosluk/vize merkezi randevunuzu alıyoruz.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Mülakat Hazırlığı</h3>
+                        <p>Olası soruları çalışıyor, kendinizi en iyi şekilde ifade etmeniz için hazırlıyoruz.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Onay & Yolculuk Planı</h3>
+                        <p>Vizeniz onaylandıktan sonra uçuş ve varış planlamasında da destek sağlıyoruz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ÜLKELERE GÖRE VİZE BİLGİLERİ -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title centered">Ülkelere Göre Vize Bilgileri</h2>
+            <p class="section-subtitle centered">Hizmet verdiğimiz ülkelerin vize süreçlerine genel bakış.</p>
+            <table class="country-table">
+                <thead>
+                    <tr>
+                        <th>Ülke</th>
+                        <th>Vize Türü</th>
+                        <th>Ortalama Süre</th>
+                        <th>Gerekli Dil Seviyesi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🇫🇷 Fransa</td>
+                        <td>Öğrenci Vizesi (VLS-TS)</td>
+                        <td>2-4 hafta</td>
+                        <td>B1-B2 Fransızca / İngilizce</td>
+                    </tr>
+                    <tr>
+                        <td>🇮🇹 İtalya</td>
+                        <td>Öğrenci Vizesi (Tipo D)</td>
+                        <td>2-6 hafta</td>
+                        <td>B1-B2 İtalyanca / İngilizce</td>
+                    </tr>
+                    <tr>
+                        <td>🇧🇪 Belçika</td>
+                        <td>Öğrenci Vizesi (Tip D)</td>
+                        <td>4-8 hafta</td>
+                        <td>B2 Fransızca / Flemenkçe / İngilizce</td>
+                    </tr>
+                    <tr>
+                        <td>🇳🇱 Hollanda</td>
+                        <td>MVV + Oturma İzni</td>
+                        <td>2-4 hafta</td>
+                        <td>İngilizce (IELTS 6.0+)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- KONAKLAMA SEÇENEKLERİ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title centered">Konaklama Seçenekleri</h2>
+            <p class="section-subtitle centered">Bütçenize ve yaşam tarzınıza uygun barınma çözümleri sunuyoruz.</p>
+            <div class="accommodation-grid">
+                <div class="accommodation-card">
+                    <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=500" alt="Öğrenci yurdu">
+                    <div class="card-body">
+                        <h3>Öğrenci Yurtları</h3>
+                        <p>Üniversite veya özel yurtlarda güvenli ve ekonomik konaklama. Sosyal ortam ve ortak alanlar ile kampüs hayatını yaşayın.</p>
+                    </div>
+                </div>
+                <div class="accommodation-card">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500" alt="Paylaşımlı daire">
+                    <div class="card-body">
+                        <h3>Paylaşımlı Daireler</h3>
+                        <p>Diğer öğrencilerle ortak daire paylaşımı. Bağımsız yaşam deneyimi ile bütçe dostu bir seçenek.</p>
+                    </div>
+                </div>
+                <div class="accommodation-card">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500" alt="Özel stüdyo">
+                    <div class="card-body">
+                        <h3>Özel Stüdyo Daireler</h3>
+                        <p>Tam bağımsız yaşam isteyenler için stüdyo daireler. Kendi mutfak ve banyonuzla özel alanınız.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Vize & Konaklama Sürecinizi Başlatın</h2>
+            <p>Ücretsiz ön değerlendirme görüşmesi için hemen bize ulaşın. Hayalinizdeki eğitim bir adım uzağınızda.</p>
+            <a href="index.html#iletisim" class="btn btn-white">İletişime Geçin</a>
+            <a href="https://wa.me/905551234567" class="btn-whatsapp" target="_blank">💬 WhatsApp'tan Yazın</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 <a href="index.html">Studylab</a>. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

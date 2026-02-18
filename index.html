@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studylab - Avrupa'da Eğitim Danışmanlığı</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1244b0;
+            --primary-light: #e8eefb;
+            --accent: #2563eb;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--dark); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 70px;
+            min-height: 85vh;
+            background: linear-gradient(135deg, rgba(26,86,219,0.88), rgba(37,99,235,0.75)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero .container {
+            width: 100%;
+            padding: 60px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto 35px;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-accent {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26,86,219,0.3);
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-alt { background: var(--light); }
+
+        /* ===== HİZMETLER ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .service-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ===== ÜLKELER ===== */
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .country-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--white);
+        }
+
+        .country-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+        }
+
+        .country-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .country-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .country-flag {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .country-info h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .country-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== HAKKIMIZDA ===== */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 12px;
+            padding: 25px 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* ===== YORUMLAR ===== */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .review-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 35px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .review-stars {
+            color: #f59e0b;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .review-text {
+            color: var(--gray);
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .review-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .review-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .review-location {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* ===== SSS ===== */
+        .faq-list {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 20px 25px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        .faq-question:hover { background: var(--primary-light); }
+
+        .faq-icon {
+            font-size: 1.3rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: 15px;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer.open {
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            padding: 0 25px 20px;
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* ===== İLETİŞİM ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .contact-item-text span {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .contact-item-text a,
+        .contact-item-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25d366;
+            color: var(--white);
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .contact-form h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 50px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo { font-size: 1.4rem; }
+        .footer-brand .logo span { color: #94a3b8; }
+
+        .footer-brand p {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer h4 {
+            color: var(--white);
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li { margin-bottom: 10px; }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .services-grid,
+            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+            .countries-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-content { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex; }
+
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .section-title { font-size: 1.7rem; }
+
+            .services-grid,
+            .reviews-grid,
+            .countries-grid { grid-template-columns: 1fr; }
+
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .stat-item { padding: 18px 10px; }
+            .stat-number { font-size: 1.6rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Study<span>lab</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hizmetler">Hizmetler</a></li>
+                <li><a href="#ulkeler">Ülkeler</a></li>
+                <li><a href="#hakkimizda">Hakkımızda</a></li>
+                <li><a href="#sss">SSS</a></li>
+                <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>Avrupa'da Eğitim Hayalini<br>Gerçeğe Dönüştür</h1>
+            <p>Fransa, İtalya, Belçika ve Hollanda'nın en prestijli üniversitelerinde eğitim almanız için yanınızdayız. Başvurudan yerleşmeye kadar her adımda sizinle.</p>
+            <a href="#iletisim" class="btn btn-primary">Ücretsiz Danışmanlık Al</a>
+        </div>
+    </section>
+
+    <!-- HİZMETLER -->
+    <section class="section" id="hizmetler">
+        <div class="container">
+            <h2 class="section-title">Hizmetlerimiz</h2>
+            <p class="section-subtitle">Yurt dışı eğitim sürecinizin her aşamasında profesyonel destek sağlıyoruz.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🎓</div>
+                    <h3>Üniversite Yerleştirme</h3>
+                    <p>Lisans ve yüksek lisans programlarına başvuru sürecinizi A'dan Z'ye yönetiyoruz. Doğru üniversite ve bölüm seçiminde yanınızdayız.</p>
+                </div>
+                <a href="vize-konaklama.html" class="service-card" style="text-decoration: none; color: inherit;">
+                    <div class="service-icon">📋</div>
+                    <h3>Vize & Konaklama Desteği</h3>
+                    <p>Vize başvuru sürecinizi eksiksiz hazırlıyor, uygun konaklama seçeneklerini bulmanızda yardımcı oluyoruz.</p>
+                </a>
+                <div class="service-card">
+                    <div class="service-icon">📝</div>
+                    <h3>Sınav Hazırlık</h3>
+                    <p>IELTS, TOEFL, DELF, DALF gibi dil sınavlarına ve akademik yeterlilik sınavlarına hazırlık desteği veriyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ÜLKELER -->
+    <section class="section section-alt" id="ulkeler">
+        <div class="container">
+            <h2 class="section-title">Hizmet Verdiğimiz Ülkeler</h2>
+            <p class="section-subtitle">Avrupa'nın en seçkin eğitim destinasyonlarında hayalinizdeki eğitime ulaşın.</p>
+            <div class="countries-grid">
+                <div class="country-card">
+                    <div class="country-img" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600')"></div>
+                    <div class="country-info">
+                        <div class="country-flag">🇫🇷</div>
+                        <h3>Fransa</h3>
+                        <p>Sorbonne, Sciences Po gibi dünyaca ünlü üniversiteler. Sanat, mühendislik ve işletme alanlarında güçlü programlar.</p>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-img" style="background-image: url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600')"></div>
+                    <div class="country-info">
+                        <div class="country-flag">🇮🇹</div>
+                        <h3>İtalya</h3>
+                        <p>Avrupa'nın en köklü üniversiteleri. Mimarlık, tasarım, tıp ve güzel sanatlar alanlarında öncü eğitim.</p>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-img" style="background-image: url('https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?w=600')"></div>
+                    <div class="country-info">
+                        <div class="country-flag">🇧🇪</div>
+                        <h3>Belçika</h3>
+                        <p>AB'nin kalbi Brüksel'de uluslararası kariyerinizi başlatın. Çok dilli eğitim imkanları ve güçlü araştırma altyapısı.</p>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-img" style="background-image: url('https://images.unsplash.com/photo-1534351590666-13e3e96b5571?w=600')"></div>
+                    <div class="country-info">
+                        <div class="country-flag">🇳🇱</div>
+                        <h3>Hollanda</h3>
+                        <p>İngilizce eğitim veren geniş program yelpazesi. Yenilikçi eğitim sistemi ve yüksek yaşam kalitesi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HAKKIMIZDA -->
+    <section class="section" id="hakkimizda">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Neden Studylab?</h2>
+                    <p>Studylab olarak, Avrupa'da eğitim almak isteyen öğrencilere kapsamlı danışmanlık hizmeti sunuyoruz. Deneyimli ekibimiz ile başvuru sürecinizden ülkeye yerleşmenize kadar her adımda yanınızdayız.</p>
+                    <p>Her öğrencinin benzersiz olduğuna inanıyor, kişiye özel çözümler üretiyoruz. Hedefimiz sadece bir üniversiteye yerleştirmek değil, hayalinizdeki kariyer yolculuğunu başlatmak.</p>
+                    <a href="#iletisim" class="btn btn-accent" style="margin-top: 15px;">Bize Ulaşın</a>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Yerleştirilen Öğrenci</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Partner Üniversite</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8+</span>
+                        <span class="stat-label">Yıllık Deneyim</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SSS -->
+    <section class="section" id="sss">
+        <div class="container">
+            <h2 class="section-title">Sık Sorulan Sorular</h2>
+            <p class="section-subtitle">Merak ettiklerinize hızlı yanıtlar.</p>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Başvuru süreci ne kadar sürer?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Başvuru süreci ülkeye ve programa göre değişmekle birlikte, genellikle 2-4 ay sürmektedir. Erken başvuru yapmanızı öneriyoruz. İlk görüşmeden itibaren size özel bir zaman planı hazırlıyoruz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Avrupa'da eğitim maliyeti ne kadardır?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Eğitim maliyetleri ülke ve üniversiteye göre büyük farklılık gösterir. Fransa'da devlet üniversitelerinde yıllık 170-380€, Hollanda'da 2.000-15.000€ arasında değişebilir. Burs imkanları da mevcuttur.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Vize başvurusu için hangi belgeler gerekli?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Genel olarak pasaport, kabul mektubu, mali yeterlilik belgesi, sağlık sigortası ve konaklama kanıtı gereklidir. Her ülkenin ek gereksinimleri olabilir; biz tüm belge sürecinizi adım adım yönlendiriyoruz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Dil bilmeden Avrupa'da eğitim alabilir miyim?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Hollanda ve Belçika başta olmak üzere birçok ülkede İngilizce eğitim veren programlar mevcuttur. Ayrıca sınav hazırlık hizmetimizle dil yeterliliğinizi kazanmanıza yardımcı oluyoruz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Danışmanlık hizmetiniz ücretli mi?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>İlk görüşme ve ön değerlendirme tamamen ücretsizdir. Detaylı danışmanlık paketlerimiz hakkında bilgi almak için bizimle iletişime geçebilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İLETİŞİM -->
+    <section class="section section-alt" id="iletisim">
+        <div class="container">
+            <h2 class="section-title">İletişime Geçin</h2>
+            <p class="section-subtitle">Hayalinizdeki eğitim için ilk adımı bugün atın. Size yardımcı olmaktan mutluluk duyarız.</p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Bize Ulaşın</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-item-text">
+                            <span>Telefon</span>
+                            <a href="tel:+902121234567">+90 (212) 123 45 67</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">💬</div>
+                        <div class="contact-item-text">
+                            <span>WhatsApp</span>
+                            <a href="https://wa.me/905551234567">+90 (555) 123 45 67</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-item-text">
+                            <span>E-posta</span>
+                            <a href="mailto:info@studylab.com.tr">info@studylab.com.tr</a>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/905551234567" class="btn-whatsapp" target="_blank">
+                        💬 WhatsApp'tan Yazın
+                    </a>
+                </div>
+                <div class="contact-form">
+                    <h3>Ücretsiz Danışmanlık Formu</h3>
+                    <form onsubmit="handleForm(event)">
+                        <div class="form-group">
+                            <label>Ad Soyad</label>
+                            <input type="text" placeholder="Adınızı ve soyadınızı girin" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-posta</label>
+                            <input type="email" placeholder="E-posta adresinizi girin" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input type="tel" placeholder="Telefon numaranızı girin">
+                        </div>
+                        <div class="form-group">
+                            <label>Mesajınız</label>
+                            <textarea placeholder="Hangi ülke ve program ile ilgileniyorsunuz?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-accent" style="width: 100%;">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">Study<span>lab</span></a>
+                    <p>Avrupa'da eğitim almak isteyen öğrencilere profesyonel danışmanlık hizmeti sunuyoruz. Hayalinizdeki eğitime birlikte ulaşalım.</p>
+                </div>
+                <div>
+                    <h4>Hızlı Linkler</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hizmetler">Hizmetler</a></li>
+                        <li><a href="#ulkeler">Ülkeler</a></li>
+                        <li><a href="#hakkimizda">Hakkımızda</a></li>
+                        <li><a href="#iletisim">İletişim</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Sosyal Medya</h4>
+                    <div class="social-links">
+                        <a href="#" title="Instagram">📷</a>
+                        <a href="#" title="Facebook">📘</a>
+                        <a href="#" title="LinkedIn">💼</a>
+                        <a href="#" title="YouTube">🎬</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Studylab. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Menü linkine tıklayınca mobil menüyü kapat
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('active');
+
+            // Diğerlerini kapat
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('active');
+                i.querySelector('.faq-answer').classList.remove('open');
+            });
+
+            if (!isOpen) {
+                item.classList.add('active');
+                answer.classList.add('open');
+            }
+        }
+
+        function handleForm(e) {
+            e.preventDefault();
+            alert('Mesajınız alındı! En kısa sürede sizinle iletişime geçeceğiz.');
+            e.target.reset();
+        }
+
+        // Navbar scroll efekti
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '10px 0';
+            } else {
+                navbar.style.padding = '15px 0';
+            }
+        });
+    </script>
+
+</body>
+</html>
